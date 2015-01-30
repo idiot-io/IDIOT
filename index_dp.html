@@ -9,14 +9,19 @@
    <head>
       <title>IOT</title>
       <script type='text/javascript'>
-         //var externalURL ='IxFcgEzLPT2t';  //unique ID of imp ##1 //should be derived from URL
-         //var externalURL ='_uCxHNXQN81A';  //unique ID of imp ##2
-         //var externalURL ='HBF38MYvvkCl';  //unique ID of imp ##3
-         //var externalURL ='MR-629yXNoMU';  //unique ID of imp ##4 
-         var externalURL ='ZL_m-jCsc3cD';    //unique ID of imp ##5
-         //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
-         var url = 'https://agent.electricimp.com/'+externalURL;
-         var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
+        //here we set uuid for specific imp
+        //var externalURL ='IxFcgEzLPT2t';  //unique ID of imp ##1 //should be derived from URL
+        //var externalURL ='_uCxHNXQN81A';  //unique ID of imp ##2
+        //var externalURL ='HBF38MYvvkCl';  //unique ID of imp ##3
+        //var externalURL ='MR-629yXNoMU';  //unique ID of imp ##4 
+        var externalURL ='ZL_m-jCsc3cD';    //unique ID of imp ##5
+        //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
+        var url = 'https://agent.electricimp.com/'+externalURL;
+
+        //var channel-id = '10614' //for imp #4
+        var channel-id = '10620' //for imp #5
+
+        var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
       </script>
       <script>
          //cool multitab for bootsrap
@@ -146,12 +151,12 @@
                      </div>
                      <!-- 00000000000000000000000000000000000 -->
                      <div class="tab-pane" id="ThingSpeek">
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/1?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/2?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/3?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/4?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/5?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/6?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/1?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/2?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/3?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/4?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/5?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/6?width=450&height=260&results=60&dynamic=true" ></iframe>
                      </div>
                      <!-- 00000000000000000000000000000000000 -->
                   </div>
