@@ -8,53 +8,43 @@
 
 <html lang='en' xmlns="https://www.w3.org/1999/xhtml">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
-  <script type='text/javascript'>
-//<![CDATA[
-
-    //var externalURL ='IxFcgEzLPT2t';  //unique ID of imp ##1 //should be derived from URL
-    //var externalURL ='_uCxHNXQN81A';  //unique ID of imp ##2
-    //var externalURL ='HBF38MYvvkCl';  //unique ID of imp ##3
-    //var externalURL ='MR-629yXNoMU';    //unique ID of imp ##4 
-    var externalURL ='ZL_m-jCsc3cD';      //unique ID of imp ##5
-    //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
-        var url = 'https://agent.electricimp.com/'+externalURL;
-        
-        var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)
-  //]]>
-  
-	//cool multitab for bootsrap
-	// 
-  </script>
-  <script>
-    $('#myTabs').bind('show', function(e) { paneID = $(e.target).attr('href'); src =
-  $(paneID).attr('data-src'); // if the iframe hasn't already been loaded once
-  if($(paneID+" iframe").attr("src")=="") { $(paneID+" iframe").attr("src",src); } });
-  </script>
+  <title>IOT</title>
   <meta charset='utf-8' />
   <meta https-equiv='X-UA-Compatible' content='IE=edge' />
   <meta name='viewport' content='width=device-width, initial-scale=1' />
-
-  
-  <title>IOT</title>
+  <script type='text/javascript'>
+    //var externalURL ='IxFcgEzLPT2t';  //unique ID of imp ##1 //should be derived from URL
+    //var externalURL ='_uCxHNXQN81A';  //unique ID of imp ##2
+    //var externalURL ='HBF38MYvvkCl';  //unique ID of imp ##3
+    //var externalURL ='MR-629yXNoMU';  //unique ID of imp ##4 
+    var externalURL ='ZL_m-jCsc3cD';    //unique ID of imp ##5
+    //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
+    var url = 'https://agent.electricimp.com/'+externalURL;
+    var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
+  </script>
+  <script>
+  //cool multitab for bootsrap
+  $('#myTabs').bind('show', function(e) { paneID = $(e.target).attr('href'); src =
+  $(paneID).attr('data-src'); // if the iframe hasn't already been loaded once
+  if($(paneID+" iframe").attr("src")=="") { $(paneID+" iframe").attr("src",src); } });
+  </script>
   <link rel='stylesheet' href=
   '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' type="text/css" />
 </head>
 
 <body>
   <div class='container'>
-    <h1>IDIOT #4</h1>
+    <h1>IDIOT #5</h1>
     <hr />
 <div class="container">
     <div class="row">
       <div class="span12">				
-		<ul class="nav nav-tabs" id="myTabs">
-				  <li><a href="#home" data-toggle="tab">Home</a></li>
-				  <li><a href="#ThingSpeek" data-toggle="tab">ThingSpeek</a></li>
-				  <!--<li><a href="#rn" data-toggle="tab">Antwon</a></li>-->
-		</ul>
-        <div class="tab-content">
+    		<ul class="nav nav-tabs" id="myTabs">
+    				  <li><a href="#home" data-toggle="tab">Home</a></li>
+    				  <li><a href="#ThingSpeek" data-toggle="tab">ThingSpeek</a></li>
+    				  <!--<li><a href="#rn" data-toggle="tab">Antwon</a></li>-->
+    		</ul>
+      <div class="tab-content">
 <!-- 00000000000000000000000000000000000 -->
 
           <div class="tab-pane active" id="home">
