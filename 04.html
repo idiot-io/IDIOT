@@ -1,0 +1,221 @@
+<!--
+// IDIOT - ACDCWIFI
+//agent code
+// bootstrap code via https://github.com/tomerweller/iot
+//based on https://github.com/electricimp/examples/tree/master/SnackBot and others
+// shenkar SE lab (redButkhe/yair99)
+-->
+
+
+<!DOCTYPE html>
+<html lang='en'>
+<script type='text/javascript'>
+
+    var externalURL ='MR-629yXNoMU'; 	//unique ID of imp ##4 
+	var url = 'https://agent.electricimp.com/'+externalURL;
+	
+	var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)
+</script>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>IOT</title>
+</head>
+<body>
+
+<div class='container'>
+    <h1>IDIOT</h1>
+    <hr/>
+    <form class='form-horizontal' role='form'>
+        <div class='form-group'>
+            <label for='inputIf' class='col-xs-2 control-label'>IF</label>
+            <div class='col-xs-5'>
+                <select id='inputIf' class='form-control'>
+                    <option value='0'>SENSOR (device)</option>
+                    <option value='1'>MOVMENT (mobile)</option>
+                    <option value='2'>AMBIENT(mobile)</option>
+                </select>
+            </div>
+            <label for='inputthat' class='col-xs-1 control-label'>></label>
+            <div class='col-xs-4'>
+                <input type='number' value='30' class='form-control' id='inputthat' placeholder=''>
+            </div>
+            <hr/>
+            <label for='inputThen' class='col-xs-2 control-label'>THEN</label>
+            <div class='col-xs-5'>
+                <select id='inputThen' class='form-control'>
+                    <option value='0'>AC</option>
+                    <option value='1'>DC</option>
+                </select>
+            </div>
+            <label for='inputMode' class='col-xs-1 control-label'>SET</label>
+            <div class='col-xs-4'>
+                <select id='inputMode' class='form-control'>
+                    <option value='1'>ON</option>
+                    <option value='0'>OFF</option>
+                </select>
+            </div>
+			<hr/>
+			<!--
+            <label for='inputTime' class='col-xs-2 control-label'>FOR</label>
+			<div class='col-xs-4'>
+                <input type='number' class='form-control' id='inputTime' value='5'>
+            </div>            
+			-->
+        </div>
+    </form>
+	
+    <!-- here we assign the action 'doButton' to the submit button -->
+    <button id='doButton' type='button' class='btn btn-primary btn-lg' style='width: 100%'>DO IT!</button>
+	<hr/>
+	<div>
+	<!--
+    <button id='dc_id' type='button' class='btn btn-danger btn-sm' style='width: 33%'>DC on</button>
+
+    <button id='ac_id' type='button' class='btn btn-danger btn-sm' style='width: 33%'>AC on</button>
+	</div>
+    -->
+    
+    <h2>Device Orientation</h2>
+    <table>
+        <tr>
+            <td>Tilt Left/Right [gamma] : </td>
+            <td id='doTiltLR'></td>
+        </tr>
+        <tr>
+            <td>Tilt Front/Back [beta] : </td>
+            <td id='doTiltFB'></td>
+        </tr>
+        <tr>
+            <td>Direction [alpha] : </td>
+            <td id='doDirection'></td>
+        </tr>
+    </table>
+	
+	<h2>Device State</h2>
+    <table>
+        <tr>
+            <td>_AC_state : </td> <td id='_AC_state'></td>
+        </tr>
+		<tr>
+            <td>_DC_state : </td> <td id='_DC_state'></td>
+        </tr>
+		<tr>
+            <td>_SENSOR_state : </td> <td id='_SENSOR_state'></td>
+        </tr>
+		<tr>
+            <td>_VOLT_state : </td> <td id='_VOLT_state'></td>
+        </tr>
+    </table>
+</div>
+
+<!-- Bootstrap -->
+<link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
+<script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>
+<script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script>
+<!-- Jquery -->
+<script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+<script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
+
+<script type='text/javascript'>
+	
+	//these objects hold the entire state
+	var _orientation = {tiltFB : 0, tiltLR : 0, direction :0}; 
+	var _values = {}, settings = {};
+	
+	
+    function init() {
+
+        if (window.DeviceOrientationEvent) {
+            // Listen for the device orientation event and handle the raw data
+            window.addEventListener('deviceorientation', function(eventData) {
+                // gamma is the left-to-right tilt in degrees, where right is positive
+                var tiltLR = eventData.gamma;
+
+                // beta is the front-to-back tilt in degrees, where front is positive
+                var tiltFB = eventData.beta;
+                // alpha is the compass direction the device is facing in degrees
+                var dir = eventData.alpha
+
+                // call our orientation event handler
+                deviceOrientationHandler(tiltLR, tiltFB, dir);
+            }, false);
+        }
+        
+        //on click of elemnt with ID of #doButton i will run doIt() function
+        $('#doButton').click(function(){
+            doIt();
+        });        
+		$('#dc_id').click(function(){
+            sendToImp('flipDC');
+        });
+		$('#ac_id').click(function(){
+            sendToImp('flipAC');
+        });
+		
+    }
+
+    function deviceOrientationHandler(tiltLR, tiltFB, dir) {
+		_orientation = {tiltLR : Math.round(tiltLR), tiltFB : Math.round(tiltFB), direction : Math.round(dir)}
+        $('#doTiltLR').html(Math.round(tiltLR));
+        $('#doTiltFB').html(Math.round(tiltFB));
+        $('#doDirection').html(Math.round(dir));
+    }
+
+	//this send values from JS client to AGENT
+    function doIt(){
+	settings = {
+        'what' : $('#inputIf').val(),
+        'value' : $('#inputthat').val(),
+        'then' : $('#inputThen').val(),
+        'mode' : $('#inputMode').val(),
+		'time' : $('#inputTime').val()
+	};
+	   sendToImp(JSON.stringify(settings));
+	   
+	   //do something else
+	   //testCondition();
+    }
+	
+	
+    function sendToImp(value){
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data : value,
+		});
+    }
+	
+	//pulling the state of the DEVICE via sendPin
+	setInterval(pollGET, pollRate)
+	function pollGET(){
+		$.ajax({
+			url: url,
+			type: 'GET',
+			success: function(data){
+				//console.log(data);
+				_values = $.parseJSON(data);
+				updateState(_values);
+			}
+		});
+	}
+	
+	function updateState(values){
+		$('#_AC_state').html(values['_AC_state']);
+		$('#_SENSOR_state').html(values['_SENSOR_state']);
+		$('#_DC_state').html(values['_DC_state']);
+		$('#_VOLT_state').html(values['_VOLT_state']);
+	}
+	
+	function testCondition(){
+		//if according to state, the condition has met, send a post to the device to the agent to do something
+	}
+        
+    init();
+    
+</script>
+
+</body>
+</html>
