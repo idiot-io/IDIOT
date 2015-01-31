@@ -177,6 +177,16 @@
          var _orientation = {tiltFB : 0, tiltLR : 0, direction :0}; 
          var _values = {}, settings = {};
             function init() {
+                //on click of elemnt with ID of #doButton i will run doIt() function
+                $('#doButton').click(function(){
+                    doIt();
+                });        
+                        $('#dc_id').click(function(){
+                    sendToImp('flipDC');
+                });
+                        $('#ac_id').click(function(){
+                    sendToImp('flipAC');
+                });
             
                 if (window.DeviceOrientationEvent) {
                     // Listen for the device orientation event and handle the raw data
@@ -192,23 +202,11 @@
                         // call our orientation event handler
                         deviceOrientationHandler(tiltLR, tiltFB, dir);
                     }, false);
-                }
-                
-                //on click of elemnt with ID of #doButton i will run doIt() function
-                $('#doButton').click(function(){
-                    doIt();
-                });        
-                        $('#dc_id').click(function(){
-                    sendToImp('flipDC');
-                });
-                        $('#ac_id').click(function(){
-                    sendToImp('flipAC');
-                });
-                        
+                }           
             }
             
             function deviceOrientationHandler(tiltLR, tiltFB, dir) {
-                        _orientation = {tiltLR : Math.round(tiltLR), tiltFB : Math.round(tiltFB), direction : Math.round(dir)}
+                _orientation = {tiltLR : Math.round(tiltLR), tiltFB : Math.round(tiltFB), direction : Math.round(dir)}
                 $('#doTiltLR').html(Math.round(tiltLR));
                 $('#doTiltFB').html(Math.round(tiltFB));
                 $('#doDirection').html(Math.round(dir));
@@ -260,6 +258,7 @@
                         $('#_SENSOR_state').html(values['_SENSOR_state']);
                         $('#supplyVoltage').html(values['supplyVoltage']);
                         $('#lightLevel').html(values['lightLevel']);
+                        $('#inputEmail').html(values['inputEmail']);
                 }
                 
                 // content is the data you'll write to file<br/>
