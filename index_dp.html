@@ -18,8 +18,8 @@
         //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
         var url = 'https://agent.electricimp.com/'+externalURL;
 
-        //var channel-id = '10614' //for imp #4
-        var channel-id = '10620' //for imp #5
+        //var channel-id = '10614'; //for imp #4
+        var channel-id = '10620'; //for imp #5
 
         var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
       </script>
@@ -221,7 +221,7 @@
                         'time' : $('#inputTime').val()
                 };
                    sendToImp(JSON.stringify(settings));
-                   save_content_to_file("Hello", "C:\\test");
+                   //save_content_to_file("Hello", "C:\\test");
             
                    //do something else
                    //testCondition();
@@ -237,7 +237,7 @@
             }
                 
                 //pulling the state of the DEVICE via sendPin
-                setInterval(pollGET, pollRate)
+                setInterval(pollGET, pollRate);
                 function pollGET(){
                         $.ajax({
                                 url: url,
