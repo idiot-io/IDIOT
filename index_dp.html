@@ -19,9 +19,7 @@
         var url = 'https://agent.electricimp.com/'+externalURL;
 
         //var channel-id = '10614'; //for imp #4
-        var channel-id = '10620'; //for imp #5
-
-        var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
+        var channel-id = '10620'; //for imp #5 
       </script>
       <script>
          //cool multitab for bootsrap
@@ -237,6 +235,7 @@
             }
                 
                 //pulling the state of the DEVICE via sendPin
+                var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){) 
                 setInterval(pollGET, pollRate);
                 function pollGET(){
                         $.ajax({
