@@ -9,7 +9,14 @@
    <head>
       <title>IOT</title>
       <script type='text/javascript'>
-
+         //var externalURL ='IxFcgEzLPT2t';  //unique ID of imp ##1 //should be derived from URL
+         //var externalURL ='_uCxHNXQN81A';  //unique ID of imp ##2
+         //var externalURL ='HBF38MYvvkCl';  //unique ID of imp ##3
+         //var externalURL ='MR-629yXNoMU';  //unique ID of imp ##4 
+         var externalURL ='ZL_m-jCsc3cD';    //unique ID of imp ##5
+         //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
+         var url = 'https://agent.electricimp.com/'+externalURL;
+         var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
       </script>
       <script>
          //cool multitab for bootsrap
@@ -139,12 +146,12 @@
                      </div>
                      <!-- 00000000000000000000000000000000000 -->
                      <div class="tab-pane" id="ThingSpeek">
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/1?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/2?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/3?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/4?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/5?width=450&height=260&results=60&dynamic=true" ></iframe>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/"+channel-id+"/charts/6?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/1?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/2?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/3?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/4?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/5?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/6?width=450&height=260&results=60&dynamic=true" ></iframe>
                      </div>
                      <!-- 00000000000000000000000000000000000 -->
                   </div>
@@ -153,25 +160,13 @@
          </div>
          <!-- Bootstrap -->
          <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js' type="text/javascript"></script> 
-         <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'    type="text/javascript"></script> 
-         <!-- Jquery -->
+         <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'    type="text/javascript"></script> <!-- Jquery -->
          <script src='https://code.jquery.com/jquery-1.11.0.min.js' type="text/javascript"></script> 
-         <script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js' type="text/javascript"></script> 
-         <script type='text/javascript'>  
-            //here we set uuid for specific imp
-            //var externalURL ='IxFcgEzLPT2t';  //unique ID of imp ##1 //should be derived from URL
-            //var externalURL ='_uCxHNXQN81A';  //unique ID of imp ##2
-            //var externalURL ='HBF38MYvvkCl';  //unique ID of imp ##3
-            //var externalURL ='MR-629yXNoMU';  //unique ID of imp ##4 
-            var externalURL ='ZL_m-jCsc3cD';    //unique ID of imp ##5
-            //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
-            var url = 'https://agent.electricimp.com/'+externalURL;
-
-            //var channel-id = '10614'; //for imp #4
-            var channel-id = '10620'; //for imp #5 
-           //these objects hold the entire state
-           var _orientation = {tiltFB : 0, tiltLR : 0, direction :0}; 
-           var _values = {}, settings = {};
+         <script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js' type="text/javascript"></script> <script type='text/javascript'>
+                  
+         //these objects hold the entire state
+         var _orientation = {tiltFB : 0, tiltLR : 0, direction :0}; 
+         var _values = {}, settings = {};
             function init() {
             
                 if (window.DeviceOrientationEvent) {
@@ -220,7 +215,7 @@
                         'time' : $('#inputTime').val()
                 };
                    sendToImp(JSON.stringify(settings));
-                   //save_content_to_file("Hello", "C:\\test");
+                   save_content_to_file("Hello", "C:\\test");
             
                    //do something else
                    //testCondition();
@@ -236,8 +231,7 @@
             }
                 
                 //pulling the state of the DEVICE via sendPin
-                var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){) 
-                setInterval(pollGET, pollRate);
+                setInterval(pollGET, pollRate)
                 function pollGET(){
                         $.ajax({
                                 url: url,
