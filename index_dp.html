@@ -19,10 +19,15 @@
          var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
       </script>
       <script>
-         //cool multitab for bootsrap
-         $('#myTabs').bind('show', function(e) { paneID = $(e.target).attr('href'); src =
-         $(paneID).attr('data-src'); // if the iframe hasn't already been loaded once
-         if($(paneID+" iframe").attr("src")=="") { $(paneID+" iframe").attr("src",src); } });
+        $('#myTabs').bind('show', function(e) {  
+            paneID = $(e.target).attr('href');
+            src = $(paneID).attr('data-src');
+            // if the iframe hasn't already been loaded once
+            if($(paneID+" iframe").attr("src")=="")
+            {
+                $(paneID+" iframe").attr("src",src);
+            }
+        });
       </script>
       <link rel='stylesheet' href=
          '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' type="text/css" />
@@ -163,7 +168,7 @@
          <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'    type="text/javascript"></script> <!-- Jquery -->
          <script src='https://code.jquery.com/jquery-1.11.0.min.js' type="text/javascript"></script> 
          <script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js' type="text/javascript"></script> <script type='text/javascript'>
-                  
+
          //these objects hold the entire state
          var _orientation = {tiltFB : 0, tiltLR : 0, direction :0}; 
          var _values = {}, settings = {};
