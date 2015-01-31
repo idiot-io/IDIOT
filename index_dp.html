@@ -18,17 +18,7 @@
          var url = 'https://agent.electricimp.com/'+externalURL;
          var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
       </script>
-      <script>
-        $('#myTabs').bind('show', function(e) {  
-            paneID = $(e.target).attr('href');
-            src = $(paneID).attr('data-src');
-            // if the iframe hasn't already been loaded once
-            if($(paneID+" iframe").attr("src")=="")
-            {
-                $(paneID+" iframe").attr("src",src);
-            }
-        });
-      </script>
+
       <link rel='stylesheet' href=
          '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' type="text/css" />
    </head>
