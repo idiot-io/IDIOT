@@ -107,12 +107,10 @@
                            <h3>Device State</h3>
                            <table>
                               <tr>
-                                 <td>_AC_state :</td>
-                                 <td id='_AC_state'></td>
+                                 <td>_AC_state :</td><td id='_AC_state'></td>
                               </tr>
                               <tr>
-                                 <td>_DC_state :</td>
-                                 <td id='_DC_state'></td>
+                                 <td>_DC_state :</td><td id='_DC_state'></td>
                               </tr>
                               <tr>
                                  <td class='lead'>_SENSOR_state :</td>
@@ -128,6 +126,12 @@
                                  <big>
                                     <td>lightLevel :</td>
                                     <td id='lightLevel'></td>
+                                 </big>
+                              </tr>
+                              <tr>
+                                 <big>
+                                    <td>email :</td>
+                                    <td id='inputEmail'></td>
                                  </big>
                               </tr>
                            </table>
@@ -243,7 +247,7 @@
                                 url: url,
                                 type: 'GET',
                                 success: function(data){
-                                        //console.log(data);
+                                        //console.log(data); //send debug data
                                         _values = $.parseJSON(data);
                                         updateState(_values);
                                 }
