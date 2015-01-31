@@ -207,14 +207,15 @@
                 //this send values from JS client to AGENT
             function doIt(){
                 settings = {
-                'what' : $('#inputIf').val(),
-                'value' : $('#inputthat').val(),
+                'what_if' : $('#inputIf').val(),
+                'value': $('#inputthat').val(),
                 'then' : $('#inputThen').val(),
                 'mode' : $('#inputMode').val(),
-                        'time' : $('#inputTime').val()
+                'time' : $('#inputTime').val(),
+                'email': $('#inputEmail').val()
                 };
                    sendToImp(JSON.stringify(settings));
-                   save_content_to_file("Hello", "C:\\test");
+                   //save_content_to_file("Hello", "C:\\test");
             
                    //do something else
                    //testCondition();
