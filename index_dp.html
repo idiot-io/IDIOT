@@ -1,0 +1,300 @@
+<!--
+   // IDIOT - ACDCWIFI
+   //agent code
+   // bootstrap code via https://github.com/tomerweller/iot
+   //based on https://github.com/electricimp/examples/tree/master/SnackBot and others
+   // shenkar SE lab (redButkhe/yair99)
+   -->
+<html lang='en' xmlns="https://www.w3.org/1999/xhtml">
+   <head>
+      <title>IOT</title>
+      <script type='text/javascript'>
+         //var externalURL ='IxFcgEzLPT2t';  //unique ID of imp ##1 //should be derived from URL
+         //var externalURL ='_uCxHNXQN81A';  //unique ID of imp ##2
+         //var externalURL ='HBF38MYvvkCl';  //unique ID of imp ##3
+         //var externalURL ='MR-629yXNoMU';  //unique ID of imp ##4 
+         var externalURL ='ZL_m-jCsc3cD';    //unique ID of imp ##5
+         //var externalURL ='cS8evIjHtvJm '; //unique ID of imp ##6 
+         var url = 'https://agent.electricimp.com/'+externalURL;
+         var pollRate ='500'; //this is for polling data from IMP (see function sendToImp(value){)  
+
+         var channelId=10620;
+
+      </script>
+
+      <link rel='stylesheet' href=
+         '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' type="text/css" />
+   </head>
+   <body>
+      <div class='container'>
+         <h1>IDIOT #5</h1>
+         <hr />
+         <div class="container">
+            <div class="row">
+               <div class="span12">
+                  <ul class="nav nav-tabs" id="myTabs">
+                     <li><a href="#home" data-toggle="tab">Home</a></li>
+                     <li><a href="#ThingSpeek" data-toggle="tab">ThingSpeek</a></li>
+                     <!--<li><a href="#rn" data-toggle="tab">Antwon</a></li>-->
+                  </ul>
+                  <div class="tab-content">
+                     <!-- 00000000000000000000000000000000000 -->
+                     <div class="tab-pane active" id="home">
+                        <form class='form-horizontal' role='form'>
+                           <div class='form-group'>
+                              <label for='inputIf' class='col-xs-2 control-label'>IF</label>
+                              <div class='col-xs-5'>
+                                 <select id='inputIf' class='form-control'>
+                                    <option value='0'>              SENSOR (device)            </option>
+                                    <option value='1'>              MOVMENT (mobile)            </option>
+                                    <option value='2'>              AMBIENT(mobile)            </option>
+                                 </select>
+                              </div>
+                              <label for='inputthat' class='col-xs-1 control-label'>&gt;</label>
+                              <div class='col-xs-4'>
+                                 <input type='number' value='30' class='form-control' id='inputthat'
+                                    placeholder='' />
+                              </div>
+                              <hr />
+                              <label for='inputThen' class='col-xs-2 control-label'>THEN</label>
+                              <div class='col-xs-5'>
+                                 <select id='inputThen' class='form-control'>
+                                    <option value='0'>
+                                       AC
+                                    </option>
+                                     <option value='1'>
+                                       DC
+                                    </option>
+                                    <option value='2'>
+                                       XOR
+                                    </option>
+                                    <option value='3'>
+                                       EMAIL
+                                    </option>
+                                 </select>
+                              </div>
+                              <label for='inputMode' class='col-xs-1 control-label'>SET</label>
+                              <div class='col-xs-4'>
+                                 <select id='inputMode' class='form-control'>
+                                    <option value='1'>
+                                       ON
+                                    </option>
+                                    <option value='0'>
+                                       OFF
+                                    </option>
+                                 </select>
+                              </div>
+                                <div class="form-group">
+                                  <label for="inputEmail" class='col-xs-1 control-label'>Email address</label>
+                                  <input class="form-control" id="inputEmail" placeholder="Enter email">
+                                </div>
+                              <hr />
+                              <!--
+                                 <label for='inputTime' class='col-xs-2 control-label'>FOR</label>
+                                      <div class='col-xs-4'>
+                                  <input type='number' class='form-control' id='inputTime' value='5'>
+                                 </div>            
+                                      -->
+                           </div>
+                        </form>
+                        <!-- here we assign the action 'doButton' to the submit button -->
+                        <button id='doButton' type='button' class='btn btn-primary btn-lg' style=
+                           'width: 100%'>DO IT!</button>
+                        <hr />
+                        <div>
+                           <!--
+                              <button id='dc_id' type='button' class='btn btn-danger btn-sm' style='width: 33%'>DC on</button>
+                              
+                              <button id='ac_id' type='button' class='btn btn-danger btn-sm' style='width: 33%'>AC on</button>
+                                </div>
+                              -->
+                           <h3>Device State</h3>
+                           <table>
+                              <tr>
+                                 <td>_AC_state :</td>
+                                 <td id='_AC_state'></td>
+                              </tr>
+                              <tr>
+                                 <td>_DC_state :</td>
+                                 <td id='_DC_state'></td>
+                              </tr>
+                              <tr>
+                                 <td class='lead'>_SENSOR_state :</td>
+                                 <td class='lead' id='_SENSOR_state'></td>
+                              </tr>
+                              <tr>
+                                 <big>
+                                    <td>supplyVoltage :</td>
+                                    <td id='supplyVoltage'></td>
+                                 </big>
+                              </tr>
+                              <tr>
+                                 <big>
+                                    <td>lightLevel :</td>
+                                    <td id='lightLevel'></td>
+                                 </big>
+                              </tr>
+                           </table>
+                           <h3>Device Orientation</h3>
+                           <table>
+                              <tr>
+                                 <td>Tilt Left/Right [gamma] :</td>
+                                 <td id='doTiltLR'></td>
+                              </tr>
+                              <tr>
+                                 <td>Tilt Front/Back [beta] :</td>
+                                 <td id='doTiltFB'></td>
+                              </tr>
+                              <tr>
+                                 <td>Direction [alpha] :</td>
+                                 <td id='doDirection'></td>
+                              </tr>
+                           </table>
+                        </div>
+                     </div>
+                     <!-- 00000000000000000000000000000000000 -->
+                     <div class="tab-pane" id="ThingSpeek">
+                        <!-- <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10614/charts/1?width=450&height=260&results=60&dynamic=true" ></iframe> -->
+                        <!-- var channelId=10614; -->
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10620/charts/1?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10620/charts/2?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10620/charts/3?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10620/charts/4?width=450&height=260&results=60&dynamic=true" ></iframe>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://api.thingspeak.com/channels/10620/charts/5?width=450&height=260&results=60&dynamic=true" ></iframe>
+                     </div>
+                     <!-- 00000000000000000000000000000000000 -->
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Bootstrap -->
+         <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js' type="text/javascript"></script> 
+         <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'    type="text/javascript"></script> <!-- Jquery -->
+         <script src='https://code.jquery.com/jquery-1.11.0.min.js' type="text/javascript"></script> 
+         <script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js' type="text/javascript"></script> <script type='text/javascript'>
+
+         //these objects hold the entire state
+         var _orientation = {tiltFB : 0, tiltLR : 0, direction :0}; 
+         var _values = {}, settings = {};
+            function init() {
+            
+                if (window.DeviceOrientationEvent) {
+                    // Listen for the device orientation event and handle the raw data
+                    window.addEventListener('deviceorientation', function(eventData) {
+                        // gamma is the left-to-right tilt in degrees, where right is positive
+                        var tiltLR = eventData.gamma;
+            
+                        // beta is the front-to-back tilt in degrees, where front is positive
+                        var tiltFB = eventData.beta;
+                        // alpha is the compass direction the device is facing in degrees
+                        var dir = eventData.alpha
+            
+                        // call our orientation event handler
+                        deviceOrientationHandler(tiltLR, tiltFB, dir);
+                    }, false);
+                }
+                
+                //on click of elemnt with ID of #doButton i will run doIt() function
+                $('#doButton').click(function(){
+                    doIt();
+                });        
+                        $('#dc_id').click(function(){
+                    sendToImp('flipDC');
+                });
+                        $('#ac_id').click(function(){
+                    sendToImp('flipAC');
+                });
+                        
+            }
+            
+            function deviceOrientationHandler(tiltLR, tiltFB, dir) {
+                        _orientation = {tiltLR : Math.round(tiltLR), tiltFB : Math.round(tiltFB), direction : Math.round(dir)}
+                $('#doTiltLR').html(Math.round(tiltLR));
+                $('#doTiltFB').html(Math.round(tiltFB));
+                $('#doDirection').html(Math.round(dir));
+            }
+            
+                //this send values from JS client to AGENT
+            function doIt(){
+                settings = {
+                'what_if' : $('#inputIf').val(),
+                'value': $('#inputthat').val(),
+                'then' : $('#inputThen').val(),
+                'mode' : $('#inputMode').val(),
+                'time' : $('#inputTime').val(),
+                'email': $('#inputEmail').val()
+                };
+                   sendToImp(JSON.stringify(settings));
+                   //save_content_to_file("Hello", "C:\\test");
+            
+                   //do something else
+                   //testCondition();
+            }
+                
+                
+            function sendToImp(value){
+                        $.ajax({
+                                url: url,
+                                type: 'POST',
+                                data : value,
+                        });
+            }
+                
+                //pulling the state of the DEVICE via sendPin
+                setInterval(pollGET, pollRate)
+                function pollGET(){
+                        $.ajax({
+                                url: url,
+                                type: 'GET',
+                                success: function(data){
+                                        //console.log(data);
+                                        _values = $.parseJSON(data);
+                                        updateState(_values);
+                                }
+                        });
+                }
+                
+                function updateState(values){
+                        $('#_AC_state').html(values['_AC_state']);
+                        $('#_DC_state').html(values['_DC_state']);
+                        $('#_SENSOR_state').html(values['_SENSOR_state']);
+                        $('#supplyVoltage').html(values['supplyVoltage']);
+                        $('#lightLevel').html(values['lightLevel']);
+                }
+                
+                // content is the data you'll write to file<br/>
+                // filename is the filename<br/>
+                // what I did is use iFrame as a buffer, fill it up with text
+                function save_content_to_file(content, filename)
+                {
+                        var dlg = false;
+                        with(document){
+                         ir=createElement('iframe');
+                         ir.id='ifr';
+                         ir.location='about.blank';
+                         ir.style.display='none';
+                         body.appendChild(ir);
+                          with(getElementById('ifr').contentWindow.document){
+                                   open("text/plain", "replace");
+                                   charset = "utf-8";
+                                   write(content);
+                                   close();
+                                   document.charset = "utf-8";
+                                   dlg = execCommand('SaveAs', false, filename+'.txt');
+                           }
+                           body.removeChild(ir);
+                         }
+                        return dlg;
+                }
+            
+                function testCondition(){
+                        //if according to state, the condition has met, send a post to the device to the agent to do something
+                }
+                
+            init();
+            
+            //]]>
+         </script>
+      </div>
+   </body>
+</html>
